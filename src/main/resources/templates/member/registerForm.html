@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+    <title>회원가입</title>
+</head>
+<body>
+    <h1>회원가입</h1>
+    <form th:action="@{/member/register}" method="POST">
+        <label>아이디</label>
+        <input type="text" name="username" required><button type="button" id="btnIdCheck">중복체크</button><span id="checkResult"></span></br>
+        <label>비밀번호</label>
+        <input type="password" name="password" required></br>
+        <label>이메일</label>
+        <input type="text" name="email" required></br>
+        <button type="submit" id="btnSubmit" disabled>제출</button>
+    </form>
+</body>
+</html>
+<script>
+    document.querySelector("#btnIdCheck").addEventListener("click", f_checkID, false);
+
+    function f_checkID(){
+        let params = {
+            username : document.getElementsByName("username")[0].value
+        }
+
+        $.ajax({
+            type: 'post',
+            url: 'idCheck',
+            data: params,
+            dataType: 'text'
+        }).done(function (data){
+            if(data == 1){
+                document.querySelector("#checkResult").innerText = "이미 사용중인 아이디입니다."
+            }else{
+                document.querySelector("#checkResult").innerText = "사용가능한 아이디입니다."
+                document.getElementsByName("username")[0].disabled = true
+                document.querySelector("#btnSubmit").disabled = false
+            }
+        }).fail(function (data){
+            console.log('실패 데이터')
+            console.log(data)
+        });
+
+    }
+
+</script>
+

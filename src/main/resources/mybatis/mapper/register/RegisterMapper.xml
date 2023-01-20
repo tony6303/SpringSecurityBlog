@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.ldyspringboot.domain.member.MemberMapper">
+    <insert id="memberRegister">
+        insert into member(username,password,email,createDate,role) values
+            (
+                #{username}, #{password}, #{email}, now(), #{role}
+            )
+    </insert>
+
+    <select id="findByUsername" resultType="com.example.ldyspringboot.domain.member.Member">
+        select id,
+               username,
+               password,
+               email,
+               createDate,
+               role
+            from member where username=#{username}
+    </select>
+
+    <select id="idCheck" resultType="String">
+        select count(*) from member where username = #{username}
+    </select>
+</mapper>

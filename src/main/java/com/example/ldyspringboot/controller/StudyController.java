@@ -12,13 +12,8 @@ public class StudyController {
     private final Logger logger = LogManager.getLogger();
 
     @GetMapping({"/","home"})
-    public String home(){
+    public String home() {
         return "home";
-    }
-
-    @GetMapping("login")
-    public String login(){
-        return "login";
     }
 
     @GetMapping("hello")
